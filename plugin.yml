@@ -1,0 +1,9 @@
+name: MONEYALGIA
+main: algiadesign\moneyalgia\MoneyalgiaPlugin
+version: 1.0.0
+api: 3.8.5
+
+load: POSTWORLD
+author: AlgiaDesign
+description: PocketMine-MP用経済API
+website: https://github.com/algiadesign/moneyalgia
