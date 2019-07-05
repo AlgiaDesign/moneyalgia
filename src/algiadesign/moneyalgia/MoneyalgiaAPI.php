@@ -61,7 +61,7 @@ class MoneyalgiaAPI
         return false;
     }
 
-    public function removeAccount($player, string $reason): bool
+    public function removeAccount($player, string $reason = ""): bool
     {
         if ($player instanceof Player) {
             $player = $player->getName();
