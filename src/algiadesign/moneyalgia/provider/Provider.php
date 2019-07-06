@@ -82,9 +82,9 @@ interface Provider
     public function save(): bool;
 
     /**
-     * リソース開放
+     * データベース閉じる
      *
-     * @return boolean 解放成功でtrue、それ以外はfalse
+     * @return boolean 成功でtrue、それ以外はfalse
      */
     public function close(): bool;
 }
