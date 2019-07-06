@@ -30,7 +30,7 @@ class MoneyalgiaPlugin extends PluginBase
         }
         $this->provider->open();
 
-        MoneyalgiaAPI::getInstance()->load($this->provider);
+        MoneyalgiaAPI::getInstance()->load($this->provider, $this->config);
     }
 
     public function onDisable()

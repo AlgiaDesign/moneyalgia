@@ -25,16 +25,25 @@ class MoneyalgiaAPI
     }
 
     private $provider;
+    private $config;
 
     private function __construct()
     {
     }
 
-    public function load(Provider $provider)
+    public function load(Provider $provider, MoneyalgiaConfig $config)
     {
         if (!isset($this->provider)) {
             $this->provider = $provider;
         }
+        if (!isset($this->config)) {
+            $this->config = $config;
+        }
+    }
+
+    public function getConfig(): MoneyalgiaConfig
+    {
+        return $this->config;
     }
 
     public function accountExists($player): bool
