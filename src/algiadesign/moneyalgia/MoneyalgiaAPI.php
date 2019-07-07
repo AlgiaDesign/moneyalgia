@@ -15,6 +15,11 @@ class MoneyalgiaAPI
 
     public static $instance;
 
+    /**
+     * インスタンス取得
+     *
+     * @return MoneyalgiaAPI
+     */
     public static function getInstance(): MoneyalgiaAPI
     {
         if (!isset(self::$instance)) {
@@ -24,13 +29,22 @@ class MoneyalgiaAPI
         return self::$instance;
     }
 
+    /** @var Provider */
     private $provider;
+    /** @var MoneyalgiaConfig */
     private $config;
 
     private function __construct()
     {
     }
 
+    /**
+     * ロード
+     *
+     * @param Provider $provider
+     * @param MoneyalgiaConfig $config
+     * @return void
+     */
     public function load(Provider $provider, MoneyalgiaConfig $config)
     {
         if (!isset($this->provider)) {
@@ -41,6 +55,12 @@ class MoneyalgiaAPI
         }
     }
 
+    /**
+     * アカウントが存在するか
+     *
+     * @param string|Player $player プレイヤー
+     * @return boolean
+     */
     public function accountExists($player): bool
     {
         if ($player instanceof Player) {
@@ -51,6 +71,13 @@ class MoneyalgiaAPI
         return $this->provider->accountExists($player);
     }
 
+    /**
+     * アカウント作成
+     *
+     * @param string|Player $player        プレイヤー
+     * @param integer       $defaultAmount 初期所持金
+     * @return boolean
+     */
     public function createAccount($player, int $defaultAmount): bool
     {
         if ($player instanceof Player) {
@@ -65,6 +92,13 @@ class MoneyalgiaAPI
         return false;
     }
 
+    /**
+     * アカウント削除
+     *
+     * @param string|Player $player プレイヤー
+     * @param string        $reason 退出時に表示するメッセージ
+     * @return boolean
+     */
     public function removeAccount($player, string $reason = ""): bool
     {
         if ($player instanceof Player) {
@@ -83,6 +117,12 @@ class MoneyalgiaAPI
         return false;
     }
 
+    /**
+     * 所持金取得
+     *
+     * @param string|Player $player プレイヤー
+     * @return integer|null アカウントが無い場合null
+     */
     public function getAmount($player): ?int
     {
         if ($player instanceof Player) {
@@ -93,6 +133,14 @@ class MoneyalgiaAPI
         return $this->provider->getAmount($player);
     }
 
+    /**
+     * 所持金の設定
+     * このAPIのコンセプト(?)を壊すことになるのであまり使わないで欲しい
+     *
+     * @param string|Player $player プレイヤー
+     * @param integer       $amount 量
+     * @return integer
+     */
     public function setAmount($player, int $amount): int
     {
         if ($amount < 0 || $amount > PHP_INT_MAX) {
@@ -114,44 +162,31 @@ class MoneyalgiaAPI
         return self::NO_ACCOUNT;
     }
 
-    public function merge(int $amount, $from, $to): int
-    {
-        if ($from instanceof Player) {
-            $from = $from->getName();
-        }
-        $from = strtolower($from);
-        if ($to instanceof Player) {
-            $to = $to->getName();
-        }
-        $to = strtolower($to);
-
-        $fromAmount = $this->getAmount($from);
-        $toAmount = $this->getAmount($to);
-        if ($fromAmount !== null && $toAmount !== null) {
-            if ($fromAmount - $amount < 0) {
-                return self::INVALID_VALUE;
-            }
-
-            if ($this->provider->setAmount($from, $fromAmount - $amount) && $this->provider->setAmount($to, $toAmount + $amount)) {
-                return self::SUCCESS;
-            }
-
-            return self::FAILURE;
-        }
-
-        return self::NO_ACCOUNT;
-    }
-
+    /**
+     * お金の単位取得
+     *
+     * @return string
+     */
     public function getUnit(): string
     {
         return $this->config->getUnit();
     }
 
+    /**
+     * config.ymlで設定されている初期所持金の取得
+     *
+     * @return integer
+     */
     public function getDefaultAmount(): int
     {
         return $this->config->getDefaultAmount();
     }
 
+    /**
+     * サーバーの残高の取得
+     *
+     * @return integer
+     */
     public function getBalance(): int
     {
         return $this->config->getBalance();
