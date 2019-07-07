@@ -41,11 +41,6 @@ class MoneyalgiaAPI
         }
     }
 
-    public function getConfig(): MoneyalgiaConfig
-    {
-        return $this->config;
-    }
-
     public function accountExists($player): bool
     {
         if ($player instanceof Player) {
@@ -117,5 +112,15 @@ class MoneyalgiaAPI
         }
 
         return self::NO_ACCOUNT;
+    }
+
+    public function getUnit(): string
+    {
+        return $this->config->getUnit();
+    }
+
+    public function getDefaultAmount(): int
+    {
+        return $this->config->getDefaultAmount();
     }
 }

@@ -26,30 +26,13 @@ class MoneyalgiaConfig
         return $this->unit;
     }
 
-    public function setUnit(string $unit)
-    {
-        $this->unit = $unit;
-    }
-
     public function getDefaultAmount(): int
     {
         return $this->defaultAmount;
     }
 
-    public function setDefaultAmount(int $amount)
-    {
-        $this->defaultAmount = $amount;
-    }
-
     public function getProviderName(): string
     {
         return $this->provider;
-    }
-
-    public function save()
-    {
-        $this->config->set("unit", $this->unit);
-        $this->config->set("default-amount", $this->defaultAmount);
-        $this->config->save();
     }
 }
