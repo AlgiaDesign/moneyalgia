@@ -114,6 +114,34 @@ class MoneyalgiaAPI
         return self::NO_ACCOUNT;
     }
 
+    public function merge(int $amount, $from, $to): int
+    {
+        if ($from instanceof Player) {
+            $from = $from->getName();
+        }
+        $from = strtolower($from);
+        if ($to instanceof Player) {
+            $to = $to->getName();
+        }
+        $to = strtolower($to);
+
+        $fromAmount = $this->getAmount($from);
+        $toAmount = $this->getAmount($to);
+        if ($fromAmount !== null && $toAmount !== null) {
+            if ($fromAmount - $amount < 0) {
+                return self::INVALID_VALUE;
+            }
+
+            if ($this->provider->setAmount($from, $fromAmount - $amount) && $this->provider->setAmount($to, $toAmount + $amount)) {
+                return self::SUCCESS;
+            }
+
+            return self::FAILURE;
+        }
+
+        return self::NO_ACCOUNT;
+    }
+
     public function getUnit(): string
     {
         return $this->config->getUnit();
@@ -122,5 +150,10 @@ class MoneyalgiaAPI
     public function getDefaultAmount(): int
     {
         return $this->config->getDefaultAmount();
+    }
+
+    public function getBalance(): int
+    {
+        return $this->config->getBalance();
     }
 }

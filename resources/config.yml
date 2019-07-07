@@ -1,6 +1,8 @@
 # お金の単位
-unit: "￥"
+unit: "ALGIA"
 # 初期所持金
 default-amount: 0
 # 保存形式 (json, sqlite)
 provider: json
+# サーバーの残高
+balance: 99999999999
