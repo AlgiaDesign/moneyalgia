@@ -5,6 +5,7 @@ namespace algiadesign\moneyalgia;
 use pocketmine\Player;
 
 use algiadesign\moneyalgia\provider\Provider;
+use algiadesign\moneyalgia\money\Money;
 
 class MoneyalgiaAPI
 {
@@ -160,6 +161,56 @@ class MoneyalgiaAPI
         }
 
         return self::NO_ACCOUNT;
+    }
+
+    /**
+     * お金を結合
+     *
+     * @param Money         $money  結合されるお金
+     * @param string|Player $player 結合先のプレイヤー
+     * @return integer
+     */
+    public function merge(Money $money, $player): int
+    {
+        if ($player instanceof Player) {
+            $player = $player->getName();
+        }
+        $player = strtolower($player);
+
+        $amount = $this->getAmount($player);
+        if ($amount !== null) {
+            $this->provider->setAmount($player, $amount + $money->getAmount());
+
+            return self::SUCCESS;
+        }
+
+        return self::NO_ACCOUNT;
+    }
+
+    /**
+     * お金を切り取る
+     *
+     * @param integer       $amount  量
+     * @param string|Player $player  プレイヤー
+     * @return Money|null 切り取れない場合null
+     */
+    public function slice(int $amount, $player): ?Money
+    {
+        if ($player instanceof Player) {
+            $player = $player->getName();
+        }
+        $player = strtolower($player);
+
+        $money = $this->getAmount($player);
+        if ($money !== null) {
+            if ($amount <= $money) {
+                $this->provider->setAmount($player, $money - $amount);
+
+                return new Money($amount);
+            }
+        }
+
+        return null;
     }
 
     /**

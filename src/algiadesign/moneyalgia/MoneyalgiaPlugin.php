@@ -16,7 +16,7 @@ class MoneyalgiaPlugin extends PluginBase
 
     public function onEnable()
     {
-        $this->getConfig()->reload();
+        $this->reloadConfig();
         $this->config = new MoneyalgiaConfig($this);
 
         switch ($this->config->getProviderName()) {
