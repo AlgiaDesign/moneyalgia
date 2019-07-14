@@ -36,7 +36,6 @@ class MoneyalgiaPlugin extends PluginBase
 
     public function onDisable()
     {
-        $this->provider->save();
         $this->provider->close();
         $this->config->save();
     }
