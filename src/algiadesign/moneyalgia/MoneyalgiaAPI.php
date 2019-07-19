@@ -14,7 +14,7 @@ class MoneyalgiaAPI
     public const NO_ACCOUNT = -1;
     public const FAILURE = -2;
 
-    public static $instance;
+    private static $instance;
 
     /**
      * インスタンス取得
