@@ -83,9 +83,9 @@ class SQLiteProvider implements Provider
     public function getAll(): array
     {
         $stmt = $this->db->prepare("SELECT * FROM money");
-
+        $data = $stmt->execute();
         $result = [];
-        while ($d = $stmt->execute()->fetchArray(SQLITE3_ASSOC)) {
+        while ($d = $data->fetchArray(SQLITE3_ASSOC)) {
             $result[] = $d;
         }
 
