@@ -1,5 +1,4 @@
 <?php
-
 namespace algiadesign\moneyalgia\money;
 
 class Money

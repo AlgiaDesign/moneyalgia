@@ -1,57 +1,30 @@
 <?php
-
 namespace algiadesign\moneyalgia;
+
+use pocketmine\utils\Config;
 
 class MoneyalgiaConfig
 {
-    /** @var \pocketmine\utils\Config */
+    /** @var Config */
     private $config;
-    /** @var string */
-    private $unit;
-    /** @var int */
-    private $defaultAmount;
-    /** @var string */
-    private $provider;
-    /** @var int */
-    private $balance;
 
-    public function __construct(MoneyalgiaPlugin $plugin)
+    public function __construct(Config $config)
     {
-        $this->config = $plugin->getConfig();
-        $this->unit = $this->config->get('unit', 'ALGIA');
-        $this->defaultAmount = $this->config->get('default-amount', 0);
-        $this->provider = $this->config->get('provider', 'json');
-        $this->balance = $this->config->get('balance', 0);
+        $this->config = $config;
     }
 
     public function getUnit(): string
     {
-        return $this->unit;
+        return (string) $this->config->get('unit', 'ALGIA');
     }
 
     public function getDefaultAmount(): int
     {
-        return $this->defaultAmount;
+        return (int) $this->config->get('default-amount', 0);
     }
 
     public function getProviderName(): string
     {
-        return $this->provider;
-    }
-
-    public function getBalance(): int
-    {
-        return $this->balance;
-    }
-
-    public function setBalance(int $amount)
-    {
-        $this->balance = $amount;
-    }
-
-    public function save()
-    {
-        $this->config->set('balance', $this->balance);
-        $this->config->save();
+        return (string) $this->config->get('provider', 'json');
     }
 }

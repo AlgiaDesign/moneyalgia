@@ -4,5 +4,3 @@ unit: "ALGIA"
 default-amount: 0
 # 保存形式 (json, sqlite)
 provider: json
-# サーバーの残高
-balance: 99999999

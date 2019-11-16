@@ -1,5 +1,4 @@
 <?php
-
 namespace algiadesign\moneyalgia;
 
 use pocketmine\plugin\PluginBase;
@@ -11,15 +10,13 @@ class MoneyalgiaPlugin extends PluginBase
 {
     /** @var \algiadesign\moneyalgia\provider\Provider */
     private $provider;
-    /** @var \aligadesign\moneyalgia\MoneyalgiaConfig */
-    private $config;
 
     public function onEnable()
     {
         $this->reloadConfig();
-        $this->config = new MoneyalgiaConfig($this);
+        $config = new MoneyalgiaConfig($this->getConfig());
 
-        switch ($this->config->getProviderName()) {
+        switch ($config->getProviderName()) {
             case "json":
                 $this->provider = new JsonProvider($this);
                 break;
@@ -31,12 +28,11 @@ class MoneyalgiaPlugin extends PluginBase
         }
         $this->provider->open();
 
-        MoneyalgiaAPI::getInstance()->load($this->provider, $this->config);
+        MoneyalgiaAPI::getInstance()->load($this->provider, $config);
     }
 
     public function onDisable()
     {
         $this->provider->close();
-        $this->config->save();
     }
 }

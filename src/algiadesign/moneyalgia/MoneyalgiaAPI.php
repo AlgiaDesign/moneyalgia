@@ -1,5 +1,4 @@
 <?php
-
 namespace algiadesign\moneyalgia;
 
 use pocketmine\Player;
@@ -215,35 +214,6 @@ class MoneyalgiaAPI
     }
 
     /**
-     * サーバー残高行き
-     *
-     * @param Money $money お金
-     * @return void
-     */
-    public function merge2balance(Money &$money)
-    {
-        $this->config->setBalance($this->getBalance() + $money->getAmount());
-        $money->setAmount(0);
-    }
-
-    /**
-     * サーバー残高からお金を切り取る
-     *
-     * @param integer $amount 量
-     * @return Money|null 切り取れない場合null
-     */
-    public function sliceFromBalance(int $amount): ?Money
-    {
-        if ($amount <= $this->getBalance()) {
-            $this->config->setBalance($this->getBalance() - $amount);
-
-            return new Money($amount);
-        }
-
-        return null;
-    }
-
-    /**
      * お金の単位取得
      *
      * @return string
@@ -261,15 +231,5 @@ class MoneyalgiaAPI
     public function getDefaultAmount(): int
     {
         return $this->config->getDefaultAmount();
-    }
-
-    /**
-     * サーバーの残高の取得
-     *
-     * @return integer
-     */
-    public function getBalance(): int
-    {
-        return $this->config->getBalance();
     }
 }

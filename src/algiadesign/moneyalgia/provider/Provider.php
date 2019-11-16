@@ -1,5 +1,4 @@
 <?php
-
 namespace algiadesign\moneyalgia\provider;
 
 use algiadesign\moneyalgia\MoneyalgiaPlugin;
