@@ -32,8 +32,13 @@ class SQLiteProvider implements Provider
     {
         $stmt = $this->db->prepare("SELECT * FROM money WHERE id = :id");
         $stmt->bindValue(':id', $id, SQLITE3_TEXT);
+        $data = $stmt->execute();
+        $result = [];
+        while ($d = $data->fetchArray(SQLITE3_ASSOC)) {
+            $result[] = $d;
+        }
 
-        return \count($stmt->execute()->fetchArray(SQLITE3_ASSOC)) > 0 ? true: false;
+        return \count($result) > 0;
     }
 
     public function createAccount(string $id, int $amount): bool
@@ -80,8 +85,8 @@ class SQLiteProvider implements Provider
         $stmt = $this->db->prepare("SELECT * FROM money");
 
         $result = [];
-        foreach ($stmt->execute()->fetchArray(SQLITE3_ASSOC) as $val) {
-            $result[$val[0]] = $val[1];
+        while ($d = $stmt->execute()->fetchArray(SQLITE3_ASSOC)) {
+            $result[] = $d;
         }
 
         return $result;
