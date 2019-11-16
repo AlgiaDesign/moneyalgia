@@ -1,0 +1,23 @@
+{
+    "command": {
+        "mapay": {
+            "description": "プレイヤーにお金を払う",
+            "usage": "/mapay <プレイヤー> <量>",
+            "not-enough": "[MONEYALGIA] お金が足りません。",
+            "pay": "[MOENYALGIA] %1に%2支払いました。"
+        },
+        "masee": {
+            "description": "プレイヤーの所持金を確認する",
+            "usage": "/masee <プレイヤー>",
+            "show": "[MONEYALGIA] %1の所持金：%2"
+        },
+        "maset": {
+            "description": "プレイヤーの所持金を設定する",
+            "usage": "/maset <プレイヤー> <量>",
+            "set": "[MONEYALGIA] %1の所持金を%2に設定しました。"
+        }
+    },
+    "player": {
+        "notfound": "[MONEYALGIA] %1のデータは存在しません。"
+    }
+}

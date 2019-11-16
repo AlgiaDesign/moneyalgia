@@ -165,11 +165,11 @@ class MoneyalgiaAPI
     /**
      * お金を結合
      *
-     * @param Money         $money  結合されるお金
      * @param string|Player $player 結合先のプレイヤー
+     * @param Money         $money  結合されるお金
      * @return integer
      */
-    public function merge(Money &$money, $player): int
+    public function merge($player, Money &$money): int
     {
         if ($player instanceof Player) {
             $player = $player->getName();
@@ -190,11 +190,11 @@ class MoneyalgiaAPI
     /**
      * お金を切り取る
      *
-     * @param integer       $amount  量
      * @param string|Player $player  プレイヤー
+     * @param integer       $amount  量
      * @return Money|null 切り取れない場合null
      */
-    public function slice(int $amount, $player): ?Money
+    public function slice($player, int $amount): ?Money
     {
         if ($player instanceof Player) {
             $player = $player->getName();
